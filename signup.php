@@ -1,11 +1,12 @@
 <?php 
 
 include "./layout/header.php";
-include './db/connect.php';
+require './db/connect.php';
 
 
 $error_message = '';
 $successMessage = '';
+
 if($_SERVER['REQUEST_METHOD']=="POST"){
     
     $fullname = $_POST['full_name'];
@@ -17,6 +18,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $error_message = "Password not matched";
         exit();
     }
+
     $sql = "INSERT INTO users (fullname, phone, email, password) VALUES ('$fullname', '$phone', '$email', '$password')";
     $result = $conn->query($sql);
     if($result){
@@ -30,7 +32,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     <div class="container py-5">
         <form action="" method="post">
             <div class="form-group">
-                <?php echo $_SERVER['REQUEST_METHOD']; ?>
+                <?php //echo $_SERVER['REQUEST_METHOD']; ?>
                 <?php 
                     if(!empty($error_message)){
                         echo "<p class='alert alert-danger'>$error_message</p>";
