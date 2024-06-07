@@ -74,7 +74,6 @@ session_start();
                                     <a href="cart.php" class="dropdown-item">Cart</a>
                                     <a href="chackout.php" class="dropdown-item active">Chackout</a>
                                     <a href="testimonial.php" class="dropdown-item">Testimonial</a>
-                                    <a href="404.php" class="dropdown-item">404 Page</a>
                                 </div>
                             </div>
                             <a href="contact.php" class="nav-item nav-link">Contact</a>
@@ -97,8 +96,8 @@ session_start();
                                     <p style="cursor:pointer" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-user"></i></span><?php echo $_SESSION['name']; ?></p>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                                           <?php if($_SESSION['user_type'] == 'vendor'){ ?> <li><a class="dropdown-item" href="create-product.php">Create Product</a></li> <?php } ?>
                                         </ul>
-
                                     </div>
                                      <?php
                                 }else{

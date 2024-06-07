@@ -14,12 +14,23 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     $email = $_POST['email'];
     $password = $_POST['password'];
     $confirm = $_POST['confirm'];
+    $userType = $_POST['user_type'];
+    echo "<pre>";
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";
+    print_r($_POST);
+    echo "</pre>";
+    exit();
     if($password != $confirm){
         $error_message = "Password not matched";
         exit();
     }
 
-    $sql = "INSERT INTO users (fullname, phone, email, password) VALUES ('$fullname', '$phone', '$email', '$password')";
+    $sql = "INSERT INTO users (fullname, phone, email, password, user_type) VALUES ('$fullname', '$phone', '$email', '$password', '$userType')";
     $result = $conn->query($sql);
     if($result){
         $successMessage = "User Created Successfully!";
@@ -57,6 +68,13 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                     <div class="my-2">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" id="email" class="form-control" name="email">
+                    </div>
+                    <div class="my-2">
+                        <label for="user_type">Choose</label>
+                        <select name="user_type" id="user_type" class="form-control">
+                            <option value="vendor">Vendor</option>
+                            <option value="user">User</option>
+                        </select>
                     </div>
                     <div class="my-2">
                         <label for="password" class="form-label">Password</label>

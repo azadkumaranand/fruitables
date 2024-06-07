@@ -1,5 +1,5 @@
 <?php 
-session_start();
+// session_start();
 include "./layout/header.php";
 require './db/connect.php';
 echo "<br>";
@@ -25,6 +25,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $_SESSION['name'] = $data['fullname'];
         $_SESSION['email'] = $data['email'];
         $_SESSION['phone'] = $data['phone'];
+        $_SESSION['user_type'] = $data['user_type'];
+        // echo "<br>";
+        // echo "<br>";
+        // echo "<br>";
+        // echo "<br>";
+        // echo "<br>";
+        // echo "<br>";
+        // echo "<br>";
+        // echo "hello login page ".$_SESSION['name'];
+        
+        // header("Location: http://localhost/fruitables");
     }else{
         $error_message = "Wrong Password";
     }
