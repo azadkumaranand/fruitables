@@ -23,6 +23,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
     if($data['password'] == $pass){
         $_SESSION['name'] = $data['fullname'];
+        $_SESSION['user_id'] = $data['id'];
         $_SESSION['email'] = $data['email'];
         $_SESSION['phone'] = $data['phone'];
         $_SESSION['user_type'] = $data['user_type'];
