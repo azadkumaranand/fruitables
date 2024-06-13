@@ -4,7 +4,7 @@ include "./layout/header.php";
 
 require './db/connect.php';
 
-$sql = "SELECT * FROM products";
+$sql = "SELECT * FROM products LIMIT 4";
 
 $result = $conn->query($sql);
 $num_rows = $result->num_rows;

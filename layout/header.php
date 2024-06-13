@@ -96,6 +96,7 @@ session_start();
                                     <p style="cursor:pointer" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-user"></i></span><?php echo $_SESSION['name']; ?></p>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                                            <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                                            <?php if($_SESSION['user_type'] == 'vendor'){ ?> <li><a class="dropdown-item" href="create-product.php">Create Product</a></li> <?php } ?>
                                         </ul>
                                     </div>
