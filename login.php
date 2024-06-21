@@ -1,5 +1,9 @@
 <?php 
-// session_start();
+session_start();
+if(isset($_SESSION['id'])){
+    header("Location: http://localhost/fruitables");
+}
+
 include "./layout/header.php";
 require './db/connect.php';
 echo "<br>";
@@ -26,8 +30,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $_SESSION['user_id'] = $data['id'];
         $_SESSION['email'] = $data['email'];
         $_SESSION['phone'] = $data['phone'];
-        $_SESSION['user_type'] = $data['user_type'];
-        $_SESSION['id'] = $data['id'];
+        $_SESSION['user_type'] = $data['role'];
         // echo "<br>";
         // echo "<br>";
         // echo "<br>";

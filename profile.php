@@ -1,9 +1,29 @@
 <?php
+// if(!isset($_SESSION['id'])){
+//     header('Location: index.php');
+//     exit();
+// }
+
 session_start();
 include './layout/header.php';
 
 require './db/connect.php';
-$user_id = $_SESSION['id'];
+$user_id = $_SESSION['user_id'];
+// echo "<br>";
+// echo "<br>";
+// echo "<br>";
+// echo "<br>";
+// echo "<br>";
+// echo "<br>";
+// echo "<br>";
+// echo "<br>";
+// echo "<br>";
+// echo "<br>";
+// echo "<br>";
+// echo "<br>";
+
+
+
 $error_message = '';
 $success_message = '';
 // echo "<pre>";
@@ -17,6 +37,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $sql = "UPDATE users SET fullname='$name', email='$email', phone='$phone' WHERE id='$user_id'";
 
     $result = $conn->query($sql);
+
     if($result){
         $success_message = "Profile Updated Successfully!";
         $_SESSION['name'] = $name;
@@ -34,7 +55,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 <div class="container-fluid py-5 my-5">
     <div class="container my-5 py-5">
-        <form action="" method='post'>
+        <form action="" method='get'>
             <?php
                 if(!empty($error_message)){?>
                 <div class="alert alert-danger"><?php echo $error_message ?></div>
@@ -56,6 +77,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 <input type="number" class="form-control" name='phone' value="<?php echo $_SESSION['phone']; ?>">
             </div>
             <button class="btn btn-primary">Update</button>
+            <?php //echo $_GET['nam'], $_GET['age']; ?>
         </form>
         <div class="contianer">
             <?php if($_SESSION['user_type'] == 'vendor'){
@@ -86,7 +108,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                     <h4><?php echo $data[$i]['product_name']; ?></h4>
                                                     <div class="d-flex justify-content-between flex-lg-wrap">
-                                                        <a href="update-product.php?prduct_id='1'" class="btn border border-secondary rounded-pill px-3 text-primary">Custumize</a>
+                                                        <a href="update-product.php?prduct_id=<?php echo $data[$i]['id']; ?>" class="btn border border-secondary rounded-pill px-3 text-primary">Custumize</a>
                                                     </div>
                                                 </div>
                                             </div>

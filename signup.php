@@ -22,15 +22,15 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     echo "<br>";
     echo "<br>";
     echo "<br>";
-    print_r($_POST);
+    // print_r($_POST);
     echo "</pre>";
-    exit();
+    // exit();
     if($password != $confirm){
         $error_message = "Password not matched";
         exit();
     }
 
-    $sql = "INSERT INTO users (fullname, phone, email, password, user_type) VALUES ('$fullname', '$phone', '$email', '$password', '$userType')";
+    $sql = "INSERT INTO users (fullname, phone, email, password, role) VALUES ('$fullname', '$phone', '$email', '$password', '$userType')";
     $result = $conn->query($sql);
     if($result){
         $successMessage = "User Created Successfully!";

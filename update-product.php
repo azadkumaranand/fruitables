@@ -4,40 +4,22 @@ include './layout/header.php';
 
 require './db/connect.php';
 
+$product_id = $_GET['prduct_id'];
+
 $error_message = '';
 $success_message='';
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    if(empty($_SESSION['user_id'])){
-        header('Location: /login.php');
-    }
     $pdname = $_POST['pdname'];
     $pdprice = $_POST['pdprice'];
     $desc = $_POST['pddesc'];
     $category = $_POST['category'];
-    $vendor_id = $_SESSION['user_id'];
     
-    if(empty($pdname) || empty($pdprice) || empty($desc) || empty($category)){
-        $error_message = "Please fill all the credentials!";
-        // exit();
-    }
+    $sql = "UPDATE products SET product_name='$pdname', price='$pdprice', description='$desc', category='$category' WHERE id='$product_id'";
     
-    $target = 'products-img/';
-    $uploded_file = $_FILES['pdimg'];
-    $path = $target.$uploded_file['name'];
-    $tempath = $uploded_file['tmp_name'];
-
-    if ($uploded_file['size'] > 1024000) {
-        $error_message = 'File size should be less than 1 MB';
-        // exit();
-    }
-    // echo "file status: ".move_uploaded_file($tempath, $path);
-    if(move_uploaded_file($tempath, $path)){
-        $sql = "INSERT INTO products (product_name, price, description, category, image, vendor_id) VALUES ('$pdname', '$pdprice', '$desc', '$category', '$path', '$vendor_id')";
-        if($conn->query($sql)){
-            $success_message = "Product Created Successfully!";
-        }else{
-            $error_message = "Product not created!";
-        }
+    if($conn->query($sql)){
+        $success_message = "Product Updated Successfully!";
+    }else{
+        $error_message = "Something went wrong!";
     }
 }
 
@@ -63,36 +45,41 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             </div>
             <?php } ?>
 
+            <?php 
+             
+             $sql = "SELECT * FROM products WHERE id='$product_id'";
+             $result = $conn->query($sql);
+             $product = $result->fetch_assoc();
+            //  print_r($product);
+            ?>
             <div class="my-2">
                 <label for="pdname" class="form-label">Product Name</label>
-                <input type="text" id="pdname" class="form-control" name="pdname">
+                <input type="text" id="pdname" class="form-control" name="pdname" value="<?php echo $product['product_name'] ?>">
             </div>
-            <?php echo $_GET['prduct_id']; ?>
+            <?php //echo $_GET['prduct_id']; ?>
             <div class="my-2">
                 <label for="pdprice" class="form-label">Product Price</label>
-                <input type="number" id="pdprice" class="form-control" name="pdprice">
+                <input type="number" id="pdprice" class="form-control" name="pdprice" value="<?php echo $product['price'] ?>">
             </div>
             <div class="my-2">
                 <label for="pddesc" class="form-label">Description</label>
-                <input type="text" id="pddesc" class="form-control" name="pddesc">
+                <input type="text" id="pddesc" class="form-control" name="pddesc" value="<?php echo $product['description'] ?>">
             </div>
+            <?php //echo $product['category'] ?>
             <div class="my-2">
                 <label for="pddesc" class="form-label">Categorey</label>
                 <select name="category" id="category" class="form-control">
-                    <option value="vegetables">Vegetables</option>
-                    <option value="fruits">Fruits</option>
-                    <option value="bread">Bread</option>
-                    <option value="meet">Meet</option>
+                    <option value="vegetables" <?php echo $product['category']=='vegetables'?'selected':''?>>Vegetables</option>
+                    <option value="fruits" <?php echo $product['category']=='fruits'?'selected':''?>>Fruits</option>
+                    <option value="bread" <?php echo $product['category']=='bread'?'selected':''?>>Bread</option>
+                    <option value="meet" <?php echo $product['category']=='meet'?'selected':''?>>Meet</option>
                 </select>
-            </div>
-            <div class="my-2">
-                <label for="pdimg" class="form-label">Product Image</label>
-                <input type="file" id="pdimg" class="form-control" name="pdimg" accept="image/*">
             </div>
             <div>
                 <button class="btn btn-primary mt-3">
-                    Create
+                    Update
                 </button>
+                <a href="product-delete.php?product_id=<?php echo $product['id'] ?>" class="btn btn-danger">Delete</a>
             </div>
         </div>
     </form>
