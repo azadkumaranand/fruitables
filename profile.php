@@ -55,7 +55,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 <div class="container-fluid py-5 my-5">
     <div class="container my-5 py-5">
-        <form action="" method='get'>
+        <form action="" method='post'>
             <?php
                 if(!empty($error_message)){?>
                 <div class="alert alert-danger"><?php echo $error_message ?></div>
