@@ -8,6 +8,22 @@ $product_id = $_GET['product_id'];
 $sql = "SELECT * FROM products WHERE id='$product_id'";
 
 $reuslt = $conn->query($sql);
+
+
+/*
+CREATE TABLE comments(
+    id INT NOT NULL AUTO_INCREMENT,
+    comment TEXT(500) NULL,
+   	rating VARCHAR(2) NOT NULL,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+*/
 // $reuslt->num_rows;
 $data = $reuslt->fetch_assoc();
 
@@ -16,6 +32,24 @@ $category = $data['category'];
 $sql1 = "SELECT * FROM products WHERE category='$category'";
 
 $related_products = $conn->query($sql1);
+
+$error_message = '';
+$success_message = '';
+
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $comment = $_POST['comment'];
+    $rating = $_POST['rating'];
+    $user_id = $_SESSION['user_id'];
+
+    $comment_sql = "INSERT INTO comments (comment, rating, user_id, product_id) VALUES ('$comment', '$rating', '$user_id', '$product_id')";
+
+    $result = $conn->query($comment_sql);
+    if($result){
+        $success_message = "Commented Successfully!";
+    }else{
+        $error_message = "Something went wrong";
+    }
+}
 
 
 
@@ -159,64 +193,45 @@ $related_products = $conn->query($sql1);
                                                     words etc. Susp endisse ultricies nisi vel quam suscipit </p>
                                             </div>
                                         </div>
-                                        <div class="d-flex">
-                                            <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                            <div class="">
-                                                <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-                                                <div class="d-flex justify-content-between">
-                                                    <h5>Sam Peters</h5>
-                                                    <div class="d-flex mb-3">
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                                <p class="text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
-                                                    words etc. Susp endisse ultricies nisi vel quam suscipit </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="nav-vision" role="tabpanel">
-                                        <p class="text-dark">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                                            amet diam et eos labore. 3</p>
-                                        <p class="mb-0">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore.
-                                            Clita erat ipsum et lorem et sit</p>
                                     </div>
                                 </div>
                             </div>
-                            <form action="#">
+                            <form action="" method="post">
+                                <?php if(!empty($success_message)){?>
+                                <div class="alert alert-success">
+                                    <?php echo $success_message; ?>
+                                </div>
+                                <?php } ?>
+                                <?php if(!empty($error_message)){?>
+                                <div class="alert alert-danger">
+                                    <?php echo $error_message; ?>
+                                </div>
+                                <?php } ?>
                                 <h4 class="mb-5 fw-bold">Leave a Reply</h4>
                                 <div class="row g-4">
-                                    <div class="col-lg-6">
-                                        <div class="border-bottom rounded">
-                                            <input type="text" class="form-control border-0 me-4" placeholder="Yur Name *">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="border-bottom rounded">
-                                            <input type="email" class="form-control border-0" placeholder="Your Email *">
+                                    <div class="col-lg-12">
+                                        <div class="border-bottom rounded my-4">
+                                            <textarea name="comment" id="" class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" spellcheck="false"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="border-bottom rounded my-4">
-                                            <textarea name="" id="" class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" spellcheck="false"></textarea>
+                                            <input type="number" min='1' max="5" name="rating">
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="d-flex justify-content-between py-3 mb-5">
                                             <div class="d-flex align-items-center">
                                                 <p class="mb-0 me-3">Please rate:</p>
-                                                <div class="d-flex align-items-center" style="font-size: 12px;">
-                                                    <i class="fa fa-star text-muted"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
+                                                <div class="d-flex align-items-center" style="font-size: 20px;">
+                                                    <i class="fa fa-star rating-input"></i>
+                                                    <i class="fa fa-star rating-input"></i>
+                                                    <i class="fa fa-star rating-input"></i>
+                                                    <i class="fa fa-star rating-input"></i>
+                                                    <i class="fa fa-star rating-input"></i>
                                                 </div>
                                             </div>
-                                            <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</a>
+                                            <button type="submit" class="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</button>
                                         </div>
                                     </div>
                                 </div>
@@ -298,10 +313,15 @@ $related_products = $conn->query($sql1);
             </div>
         </div>
         <!-- Single Product End -->
-    
-
         <?php 
-
 include "./layout/footer.php";
 
 ?>
+
+<script>
+    const inputRating = document.querySelectorAll('.rating-input');
+
+    inputRating.addEventListener('click', ()=>{
+
+    })
+</script>
