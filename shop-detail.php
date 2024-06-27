@@ -52,7 +52,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 }
 
 
-
 ?>
 
         <!-- Single Page Header start -->
@@ -175,24 +174,37 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
+                                        <?php
+                                        $select_comment = "SELECT users.fullname AS name, comments.created_at AS created_at, comments.rating, comments.comment FROM products JOIN comments ON products.id=comments.product_id JOIN users ON users.id=comments.user_id";
+
+                                        $result = $conn->query($select_comment);
+                                        $no_comments = $result->num_rows;
+                                        for($i=0; $i<$no_comments; $i++){
+                                            $comments = $result->fetch_assoc();
+                                        ?>
                                         <div class="d-flex">
                                             <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
                                             <div class="">
-                                                <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                                <p class="mb-2" style="font-size: 14px;"><?php echo $comments['created_at'] ?></p>
                                                 <div class="d-flex justify-content-between">
-                                                    <h5>Jason Smith</h5>
+                                                    <h5><?php echo $comments['name'] ?></h5>
                                                     <div class="d-flex mb-3">
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <?php 
+                                                        $rating = $comments['rating'];
+                                                        // echo $rating;
+                                                        for($j=1; $j<=5; $j++){
+                                                            if($j <= $rating){ ?>
+                                                                <i class="fa fa-star text-secondary"></i>
+                                                            <?php }else{ ?>
+                                                                <i class="fa fa-star"></i>
+                                                            <?php } ?>
+                                                        <?php } ?>
                                                     </div>
                                                 </div>
-                                                <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
-                                                    words etc. Susp endisse ultricies nisi vel quam suscipit </p>
+                                                <p><?php echo $comments['comment']; ?> </p>
                                             </div>
                                         </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
