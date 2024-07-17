@@ -21,21 +21,7 @@ $sql = "SELECT category, COUNT(id) AS count FROM products GROUP BY category";
 
 $category_count = $conn->query($sql);
 $category_count_no = $category_count->num_rows;
-// echo "<pre>";
-// echo "<br>";
-// echo "<br>";
-// echo "<br>";
-// echo "<br>";
-// echo "<br>";
-// echo "<br>";
-// print_r($result->num_rows);
-// print_r($category_count->fetch_assoc());
-// print_r($category_count->fetch_assoc());
-// echo "</pre>";
 
-// echo "<pre>";
-// // print_r($data);
-// echo "</pre>";
 
 ?>
 
@@ -55,6 +41,12 @@ $category_count_no = $category_count->num_rows;
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
+            <div class="alert alert-success alert-dismissible fade show alert-message-for-success-add-to-cart" style="position:fixed; bottom:50px; right: 0; display:none" role="alert">
+                <strong>Product Added To Cart</strong>
+                <button type="button" style="position:absolute; right:0;background: none; border: none; font-size: 32px; top: 5px;" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
                 <h1 class="mb-4">Fresh fruits shop</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
@@ -116,7 +108,7 @@ $category_count_no = $category_count->num_rows;
                             <?php for($i=0; $i<$rows; $i++){ ?>
                                     <div class="col-md-6 col-lg-6 col-xl-4">
                                         <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
+                                            <div class="fruite-img" style="height: 200px;">
                                                 <img src="<?php echo $data[$i]['image'] ?>" class="img-fluid w-100 rounded-top" alt="">
                                             </div>
                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
@@ -128,7 +120,11 @@ $category_count_no = $category_count->num_rows;
                                                         <p class="text-dark fs-5 fw-bold mb-0">Rs<?php echo $data[$i]['price'] ?> / kg</p>
                                                     </div>
                                                 </a>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                <!-- <form class="addtocart">
+                                                    <input type="hidden" value="<?php //echo $data[$i]['id'] ?>" name="product_id">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary addtocart" type="submit">Add to cart</button>
+                                                </form> -->
+                                                <button class="btn border border-secondary rounded-pill px-3 text-primary addtocart" data="<?php echo $data[$i]['id'] ?>"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
                                             </div>
                                         </div>
                                     </div>
@@ -141,6 +137,63 @@ $category_count_no = $category_count->num_rows;
             </div>
         </div>
         <!-- Fruits Shop End-->
+
+        <!-- ajax for add to cart items -->
+
+        <script>
+            // document.querySelectorAll('.addtocart').forEach((form) => {
+            //     form.addEventListener('click', (e) => {
+            //         e.preventDefault();
+            //         const formData = new FormData(form);
+            //         let xhr = new XMLHttpRequest();
+            //         xhr.open('POST', 'http://localhost/fruitables/addtocart.php', true);
+            //         // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Set content type
+            //         // xhr.setRequestHeader('Content-Type', 'application/json');
+
+            //         xhr.onload = function() {
+            //             if (xhr.status == 200) {
+            //                 console.log(xhr.responseText); // Handle the response
+            //             }
+            //         };
+
+            //         // Prepare the data to be sent
+            //         // let data = 'product_id=' + productId;
+            //         // let data = JSON.stringify({product_id : productId})
+            //         xhr.send(formData); // Send the request with data
+            //     });
+            // });
+
+            let alertMessageForSuccessAddtocart = document.querySelector('.alert-message-for-success-add-to-cart');
+
+            document.querySelector('.close').addEventListener('click', ()=>{
+                alertMessageForSuccessAddtocart.style.display = 'none';
+            })
+
+            
+            document.querySelectorAll('.addtocart').forEach((button) => {
+                button.addEventListener('click', ()=>{
+                    let product_id = button.getAttribute('data');
+                    
+                    // alert(product_id)
+                    const xhr = new XMLHttpRequest();
+
+                    xhr.open('post', 'http://localhost/fruitables/addtocart.php');
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+
+                    xhr.onload = function(){
+                        if(xhr.status == 200){
+                            console.log(xhr.responseText);
+                            alertMessageForSuccessAddtocart.style.display = 'block';
+                        }
+                    }
+                    let data = "product_id="+encodeURIComponent(product_id);
+                    xhr.send(data);
+                })
+            });
+
+
+</script>
+
 
         <?php 
 

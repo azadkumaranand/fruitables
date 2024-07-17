@@ -175,7 +175,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                     </div>
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                                         <?php
-                                        $select_comment = "SELECT users.fullname AS name, comments.created_at AS created_at, comments.rating, comments.comment FROM products JOIN comments ON products.id=comments.product_id JOIN users ON users.id=comments.user_id";
+                                        $select_comment = "SELECT users.fullname AS name, comments.created_at AS created_at, comments.rating, comments.comment FROM products JOIN comments ON products.id=comments.product_id JOIN users ON users.id=comments.user_id WHERE products.id='$product_id'";
 
                                         $result = $conn->query($select_comment);
                                         $no_comments = $result->num_rows;
