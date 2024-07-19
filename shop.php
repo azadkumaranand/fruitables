@@ -1,6 +1,6 @@
 <?php 
 
-include "./layout/header.php";
+include "./header.php";
 include './db/connect.php';
 
 $sql = "SELECT * FROM products";
@@ -197,6 +197,6 @@ $category_count_no = $category_count->num_rows;
 
         <?php 
 
-include "./layout/footer.php";
+include "./footer.php";
 
 ?>

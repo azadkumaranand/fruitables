@@ -1,6 +1,8 @@
 <?php 
 // sesstion_start();
-include "./layout/header.php";
+// include "./header.php";
+include "./header.php";
+// include "./addtocart.php";
 
 ?>
 
@@ -22,9 +24,7 @@ include "./layout/header.php";
             <div class="container py-5">
                 <div class="table-responsive">
                     <table class="table">
-                        <?php
-                            print_r($_SESSION['products_added_to_cart']);
-                        ?>
+                        
                         <thead>
                           <tr>
                             <th scope="col">Products</th>
@@ -36,17 +36,20 @@ include "./layout/header.php";
                           </tr>
                         </thead>
                         <tbody>
+                            <?php foreach($allData as $key=>$value){ 
+                                // print_r($value);
+                                ?>
                             <tr>
                                 <th scope="row">
                                     <div class="d-flex align-items-center">
-                                        <img src="img/vegetable-item-3.png" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                        <img src="<?php echo $value['image']; ?>" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
                                     </div>
                                 </th>
                                 <td>
-                                    <p class="mb-0 mt-4">Big Banana</p>
+                                    <p class="mb-0 mt-4"><?php echo $value['product_name']; ?></p>
                                 </td>
                                 <td>
-                                    <p class="mb-0 mt-4">2.99 $</p>
+                                    <p class="mb-0 mt-4">Rs <?php echo $value['price']; ?></p>
                                 </td>
                                 <td>
                                     <div class="input-group quantity mt-4" style="width: 100px;">
@@ -55,7 +58,7 @@ include "./layout/header.php";
                                             <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm text-center border-0" value="1">
+                                        <input type="text" class="form-control form-control-sm text-center border-0" value="<?php echo $value['product_count'] ?>">
                                         <div class="input-group-btn">
                                             <button class="btn btn-sm btn-plus rounded-circle bg-light border">
                                                 <i class="fa fa-plus"></i>
@@ -64,7 +67,7 @@ include "./layout/header.php";
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="mb-0 mt-4">2.99 $</p>
+                                    <p class="mb-0 mt-4">Rs <?php echo $value['price']*$value['product_count']; ?></p>
                                 </td>
                                 <td>
                                     <button class="btn btn-md rounded-circle bg-light border mt-4" >
@@ -73,6 +76,7 @@ include "./layout/header.php";
                                 </td>
                             
                             </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -113,6 +117,6 @@ include "./layout/header.php";
 
         <?php 
 
-include "./layout/footer.php";
+include "./footer.php";
 
 ?>
