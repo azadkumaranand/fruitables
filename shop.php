@@ -178,11 +178,15 @@ $category_count_no = $category_count->num_rows;
                     const xhr = new XMLHttpRequest();
 
                     xhr.open('post', 'http://localhost/fruitables/addtocart.php');
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
                     xhr.onload = function(){
                         if(xhr.status == 200){
-                            console.log(xhr.responseText);
+                            // console.log(xhr.responseText);
+                            let arr = JSON.parse(xhr.responseText);
+                            arr.forEach((item) => {
+                                console.log(item);
+                            });
                             alertMessageForSuccessAddtocart.style.display = 'block';
                         }
                     }

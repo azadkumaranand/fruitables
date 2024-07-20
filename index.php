@@ -1,6 +1,6 @@
 <?php 
 
-include "./layout/header.php";
+include "./header.php";
 
 
 require './db/connect.php';
@@ -660,6 +660,6 @@ for($i=0; $i<$num_rows; $i++){
 
         <?php 
 
-include "./layout/footer.php";
+include "./footer.php";
 
 ?>

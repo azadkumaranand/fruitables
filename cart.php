@@ -4,6 +4,7 @@
 include "./header.php";
 // include "./addtocart.php";
 
+
 ?>
 
 
@@ -18,7 +19,12 @@ include "./header.php";
         </div>
         <!-- Single Page Header End -->
 
-
+        <div class="alert alert-success alert-dismissible fade show alert-message-for-success-remove-from-cart" style="position:fixed; bottom:50px; right: 0; display:none" role="alert">
+                <strong class="removeMessage"></strong>
+                <button type="button" style="position:absolute; right:0;background: none; border: none; font-size: 32px; top: 5px;" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         <!-- Cart Page Start -->
         <div class="container-fluid py-5">
             <div class="container py-5">
@@ -58,7 +64,7 @@ include "./header.php";
                                             <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm text-center border-0" value="<?php echo $value['product_count'] ?>">
+                                        <input type="text" class="form-control form-control-sm text-center border-0" value="<?php echo $value['product_count']; ?>">
                                         <div class="input-group-btn">
                                             <button class="btn btn-sm btn-plus rounded-circle bg-light border">
                                                 <i class="fa fa-plus"></i>
@@ -70,7 +76,7 @@ include "./header.php";
                                     <p class="mb-0 mt-4">Rs <?php echo $value['price']*$value['product_count']; ?></p>
                                 </td>
                                 <td>
-                                    <button class="btn btn-md rounded-circle bg-light border mt-4" >
+                                    <button data="<?php echo $value['id']; ?>" class="btn btn-md rounded-circle bg-light border mt-4 remove-cart-item-btn" >
                                         <i class="fa fa-times text-danger"></i>
                                     </button>
                                 </td>
@@ -113,6 +119,43 @@ include "./header.php";
             </div>
         </div>
         <!-- Cart Page End -->
+
+
+        <script>
+            const removeCartItemBtn = document.querySelectorAll('.remove-cart-item-btn');
+            const removeMessage = document.querySelector('.removeMessage');
+            const removeMessageFromCart = document.querySelector('.alert-message-for-success-remove-from-cart');
+
+            removeCartItemBtn.forEach((removeBtn) => {
+                removeBtn.addEventListener('click', (e)=>{
+                    let product_id = removeBtn.getAttribute('data');
+                    // alert(`You want remvoe ${product_id} item`);
+
+                    let xhr = new XMLHttpRequest();
+
+                    let data = new FormData();
+
+                    data.append('product_id', product_id);
+                    // data.append('name', 'azad');
+
+                    xhr.open('POST', 'http://localhost/fruitables/carthandle.php');
+
+                    // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                    xhr.onload = function (){
+                        if(xhr.status == 200){
+                            removeMessageFromCart.style.display = 'block';
+                            removeMessage.innerText = xhr.responseText;
+                            console.log(xhr.responseText);
+                        }
+                    }
+
+                    // let data = "product_id="+product_id;
+                    xhr.send(data);
+
+                })
+            });
+        </script>
 
 
         <?php 
