@@ -169,6 +169,8 @@ $category_count_no = $category_count->num_rows;
                 alertMessageForSuccessAddtocart.style.display = 'none';
             })
 
+            const cart_count = document.querySelector('#cart_count');
+
             
             document.querySelectorAll('.addtocart').forEach((button) => {
                 button.addEventListener('click', ()=>{
@@ -187,6 +189,7 @@ $category_count_no = $category_count->num_rows;
                             arr.forEach((item) => {
                                 console.log(item);
                             });
+                            cart_count.innerText = arr.length;
                             alertMessageForSuccessAddtocart.style.display = 'block';
                         }
                     }

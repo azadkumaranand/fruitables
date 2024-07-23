@@ -4,7 +4,6 @@
 include "./header.php";
 // include "./addtocart.php";
 
-
 ?>
 
 
@@ -45,7 +44,7 @@ include "./header.php";
                             <?php foreach($allData as $key=>$value){ 
                                 // print_r($value);
                                 ?>
-                            <tr>
+                            <tr id="<?php echo 'cart-item'.$value['id']; ?>">
                                 <th scope="row">
                                     <div class="d-flex align-items-center">
                                         <img src="<?php echo $value['image']; ?>" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
@@ -130,6 +129,12 @@ include "./header.php";
                 removeBtn.addEventListener('click', (e)=>{
                     let product_id = removeBtn.getAttribute('data');
                     // alert(`You want remvoe ${product_id} item`);
+                    // console.log('#cart-itme'+`${product_id}`);
+
+                    const cart_item_to_remove = document.querySelector('#cart-item'+`${product_id}`);
+                    const cart_count = document.querySelector('#cart_count');
+
+                    // console.log(cart_item_to_remove);
 
                     let xhr = new XMLHttpRequest();
 
@@ -145,8 +150,13 @@ include "./header.php";
                     xhr.onload = function (){
                         if(xhr.status == 200){
                             removeMessageFromCart.style.display = 'block';
-                            removeMessage.innerText = xhr.responseText;
+                            removeMessage.innerText = "Product removed";
+                            let arr = JSON.parse(xhr.responseText);
+                            // console.log(JSON.parse(xhr.responseText));
+                            // console.log(Array.from(JSON.parse(xhr.responseText)));
+                            cart_count.innerText = arr.length;
                             console.log(xhr.responseText);
+                            cart_item_to_remove.style.display = 'none';
                         }
                     }
 
