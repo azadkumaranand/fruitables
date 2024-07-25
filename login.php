@@ -1,9 +1,9 @@
 <?php
-session_start();
 
-include "./layout/header.php";
+include "header.php";
 require './db/connect.php';
 $error_message = '';
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error_message = "No user found with this email";
     }
 }
+
 
 ?>
 
@@ -67,5 +68,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 <?php 
-include "./layout/footer.php"; 
+include "footer.php"; 
 ?>

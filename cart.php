@@ -3,6 +3,8 @@
 // include "./header.php";
 include "./header.php";
 // include "./addtocart.php";
+// echo "<pre>";
+// print_r($allData);
 
 ?>
 
@@ -41,8 +43,13 @@ include "./header.php";
                           </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($allData as $key=>$value){ 
+                            
+                            <?php 
+                            $sumtotal = 0;
+                            $shippingamount = 30;
+                            foreach($allData as $key=>$value){ 
                                 // print_r($value);
+                                $sumtotal = $sumtotal + $value['price']*$value['product_count'];
                                 ?>
                             <tr id="<?php echo 'cart-item'.$value['id']; ?>">
                                 <th scope="row">
@@ -97,21 +104,23 @@ include "./header.php";
                                 <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                                 <div class="d-flex justify-content-between mb-4">
                                     <h5 class="mb-0 me-4">Subtotal:</h5>
-                                    <p class="mb-0">$96.00</p>
+                                    <p class="mb-0"><?php echo "Rs: ".$sumtotal; ?></p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5 class="mb-0 me-4">Shipping</h5>
                                     <div class="">
-                                        <p class="mb-0">Flat rate: $3.00</p>
+                                        <p class="mb-0">Flat rate: Rs: <?php echo $shippingamount; ?></p>
                                     </div>
                                 </div>
-                                <p class="mb-0 text-end">Shipping to Ukraine.</p>
+                                <p class="mb-0 text-end">Shipping to India.</p>
                             </div>
                             <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                 <h5 class="mb-0 ps-4 me-4">Total</h5>
-                                <p class="mb-0 pe-4">$99.00</p>
+                                <p class="mb-0 pe-4"><?php echo "Rs: ".$sumtotal+$shippingamount; ?></p>
                             </div>
-                            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                            <a href="chackout.php?totalamount=<?php echo base64_encode($sumtotal+$shippingamount); ?>">
+                                <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                            </a>
                         </div>
                     </div>
                 </div>

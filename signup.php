@@ -1,6 +1,6 @@
 <?php 
 
-include "./layout/header.php";
+include "header.php";
 require './db/connect.php';
 
 
@@ -98,6 +98,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
 <?php 
 
-include "./layout/footer.php";
+include "footer.php";
 
 ?>

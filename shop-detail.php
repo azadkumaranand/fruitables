@@ -1,6 +1,6 @@
 <?php 
 
-include "./layout/header.php";
+include "header.php";
 include './db/connect.php';
 
 $product_id = $_GET['product_id'];
@@ -326,7 +326,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         </div>
         <!-- Single Product End -->
         <?php 
-include "./layout/footer.php";
+include "footer.php";
 
 ?>
 

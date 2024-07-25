@@ -2,7 +2,7 @@
 session_start();
 require './db/connect.php';
 
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])){
     $product_id = $_POST['product_id'];
     // print_r($_POST);
     if(isset($_SESSION['products_added_to_cart']['product-'.$product_id])){
@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 // echo "<pre>";
-// print_r($_SESSION['products_added_to_cart']);
+// print_r($_SESSION['products_added_to_cart']=[]);
 // $arr = [40, 23, 56, [12, 32, 45]];
 
 $arr = $_SESSION['products_added_to_cart'];
@@ -48,7 +48,7 @@ foreach($arr as $key=>$value){
 
     $allData[] = $data;
 }
-
+// echo "<pre>";
 // print_r($allData);
 // echo $arr[3]
 

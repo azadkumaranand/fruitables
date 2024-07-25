@@ -1,6 +1,6 @@
 <?php
-// session_start();
-// ob_start();
+
+ob_start();
 
 include "./addtocart.php";
 
@@ -71,15 +71,6 @@ include "./addtocart.php";
                         <div class="navbar-nav mx-auto">
                             <a href="index.php" class="nav-item nav-link">Home</a>
                             <a href="shop.php" class="nav-item nav-link">Shop</a>
-                            <!-- <a href="shop-detail.php" class="nav-item nav-link">Shop Detail</a> -->
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.php" class="dropdown-item">Cart</a>
-                                    <a href="chackout.php" class="dropdown-item active">Chackout</a>
-                                    <a href="testimonial.php" class="dropdown-item">Testimonial</a>
-                                </div>
-                            </div>
                             <a href="contact.php" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="d-flex m-3 me-0">
@@ -110,6 +101,7 @@ include "./addtocart.php";
                                     <a href="login.php" class="btn border border-secondary rounded-2 px-3 text-primary">Log In</a>
                                 <?php
                                 }
+                                
                             ?>
                         </div>
                     </div>
@@ -137,3 +129,8 @@ include "./addtocart.php";
             </div>
         </div>
         <!-- Modal Search End -->
+<?php
+
+ob_end_flush();
+
+?>
